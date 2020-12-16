@@ -1,3 +1,4 @@
 DataScienceEmProducao/
 .ipynb_checkpoints/
 data/
+deploy/__pycache__/
