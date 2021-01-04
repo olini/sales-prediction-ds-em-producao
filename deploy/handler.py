@@ -1,5 +1,6 @@
 import pickle
 import pandas as pd
+import requests
 from flask import Flask, request, Response
 from ml_utils import Ml_utils
 
@@ -40,6 +41,21 @@ def predict():
         return df_response
     else:
         return Response('{}', status=200, mimetype='application/json')
+
+@app.route('/predict-bot', methods=['POST'])
+def predict_bot():
+    message = request.get_json()
+    print(message)
+    url = 'https://olini-rossmann-sales-pred.herokuapp.com/predict'
+    header = {'Content-type': 'application/json' }
+    data = {"Store": 22, "DayOfWeek": 4, "Date": "2015-09-17", "Open": 1.0, "Promo": 1, "StateHoliday": "0", "SchoolHoliday": 0, "StoreType": "a", "Assortment": "a", "CompetitionDistance": 1040.0, "CompetitionOpenSinceMonth": None, "CompetitionOpenSinceYear": None, "Promo2": 1, "Promo2SinceWeek": 22.0, "Promo2SinceYear": 2012.0, "PromoInterval": "Jan,Apr,Jul,Oct"}
+
+    r = requests.post( url, data=data, headers=header )
+    print( 'Status Code {}'.format( r.status_code ) )
+
+    d1 = pd.DataFrame( r.json(), columns=r.json()[0].keys() )
+    print(d1)
+    return Response('Ok', status=200)
 
 if __name__ == '__main__':
     app.run('0.0.0.0')
