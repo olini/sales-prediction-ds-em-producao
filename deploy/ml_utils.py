@@ -154,4 +154,4 @@ class Ml_utils(object):
         # join pred into the original data
         original_data['prediction'] = np.expm1(pred)
         
-        return original_data.to_json(orient='records', date_format='iso')
+        return original_data
