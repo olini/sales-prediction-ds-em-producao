@@ -111,9 +111,6 @@ class Ml_utils(object):
 
         # promo_time_week - Robust Scaler
         df['promo_time_week'] = self.promo_time_week_scaler.transform(df[['promo_time_week']].values)
-        
-        # state_holiday - One Hot Encoding
-        df = pd.get_dummies(df, prefix=['state_holiday'], columns=['state_holiday'])
 
         # store_type - Label Enconding
         df['store_type'] = self.store_type_encoder.transform(df['store_type'])
